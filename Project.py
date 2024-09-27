@@ -27,3 +27,14 @@ Sarah.transfer(4000,Dave)
 #Suggested Fix:
 #You need to pass an actual account object (e.g., Dave, an instance of the BankAccount class or similar)
 #  instead of the string "Dave"
+
+Jim=InterestRewardsAcct(1000,"Jim")
+Jim.getBalance()
+Jim.deposit(100)
+Jim.transfer(50,Dave)
+
+Blaze=SavingsAcct(1000,"Blaze")
+Blaze.getBalance()
+Blaze.deposit(100)
+Blaze.transfer(1000,Sarah)
+
