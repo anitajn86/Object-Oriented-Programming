@@ -41,4 +41,7 @@ class BankAccount:
             print("\nTransfer complete!✅\n\n***********")
         except BalanceException as error:
             print(f"\nTransfer interrupted. ❌ {error}")
-            
+
+class InterestRewardsAcct(BankAccount):
+    
+    #no initializer because there are no new properties
