@@ -1,3 +1,4 @@
+#NUMBER 1,2 AND 3
 def Car(brand, model, year, mileage):
     return {
         'brand': brand,
