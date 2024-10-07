@@ -13,7 +13,7 @@ class StudentManagement:
         self.students=[]
 
     def viableStudent(self,student):
-        if student in self.students:
+        if student not in self.students:
             return
         else:
             raise MemberException(f"Student {student} is already in the system.")
@@ -24,13 +24,14 @@ class StudentManagement:
             self.students.append(student)
             print(f" {student} has been added to the system")
         except MemberException as error:
-            print(f"The student is already in the system. \n {error}")
+            print(f"There is an error \n {error}")
+
 
 
 
 
 management=StudentManagement()
-s1=Student("Anita","BSDS","DS001")
+s1 = Student("Anita","BSDS","DS001")
 s2 = Student("Alice", "Computer Science", "CS001")
 s3 = Student("Bob", "Mathematics", "MATH002")
 
