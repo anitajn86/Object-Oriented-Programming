@@ -2,6 +2,7 @@ from ClassTruck import*
 from ClassGarage import*
 
 class GarageTester:
+    @staticmethod
     def getExample(self):
         truck = Truck("black", False)
         garage = Garage()
