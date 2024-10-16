@@ -7,3 +7,6 @@ class Truck(Vehicle):
 
     def toString(self):
         return super().toString() + f"\nHas trailer: {self.hasTrailer}"
+    
+t1=Truck(True)
+print(t1.toString())

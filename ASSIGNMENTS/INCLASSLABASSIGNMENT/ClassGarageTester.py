@@ -7,3 +7,6 @@ class GarageTester:
         garage = Garage()
         garage.setVehicle(truck)
         print(garage.toString())
+
+tester = GarageTester()
+tester.getExample()

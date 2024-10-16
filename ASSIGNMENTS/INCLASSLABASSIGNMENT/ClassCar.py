@@ -7,3 +7,6 @@ class Car(Vehicle):
 
     def toString(self):
         return super().toString() + f"\nHas winter tyres: {self.winterTyres}"
+    
+c1=Car(1)
+print(c1.toString())
