@@ -53,12 +53,12 @@ class Instructor(Person):
 def sort_students(student_list, key_function):
     return sorted(student_list, key=key_function)
 
-# Demonstrating the functionality
+# Demonstrating functionality
 # Creating a sample student list
 students = []
-add_student(students, 1, "Alice", 21, "Math")
-add_student(students, 2, "Bob", 22, "Physics")
-add_student(students, 3, "Charlie", 20, "Biology")
+add_student(students, 1, "Anita", 21, "Math")
+add_student(students, 2, "Ruth", 22, "Physics")
+add_student(students, 3, "Jonah", 20, "Biology")
 
 # Finding and removing a student
 print(find_student_by_id(students, 2))  # Should print Bob's details
@@ -66,12 +66,12 @@ remove_student_by_id(students, 2)       # Should remove Bob
 print(find_student_by_id(students, 2))   # Should print error message
 
 # Creating instances of Student and Instructor
-alice = Student("Alice", 21, "Math")
-bob = Instructor("Bob", 40, "Physics")
+Angel = Student("Angel", 31, "Math")
+James = Instructor("James", 40, "Physics")
 
 # Demonstrating polymorphism
-alice.study()
-bob.teach()
+Angel.study()
+James.teach()
 
 # Sorting students by age and name
 sorted_by_age = sort_students(students, lambda x: x['age'])
