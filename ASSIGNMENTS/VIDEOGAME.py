@@ -5,6 +5,9 @@ class Character:
         self.__health = health
         self.__position = position
 
+    def get_name(self):
+        return self.__name
+
     def move(self, new_position):
         self.__position = new_position
         print(f"{self.__name} moves to position {self.__position}")
@@ -20,17 +23,18 @@ class Character:
         print(f"{self.__name} is {self.__health}")
 
     #adding a method in the character class to extend its functionality
-    def use_vehicle(self, vehicle, destination):
-        """Boards a vehicle, drives it to a destination, and exits upon arrival."""
-        if vehicle:
-            self.__vehicle = vehicle
-            print(f"{self.__name} boards the {self.__vehicle}")
-            self.__vehicle.drive(destination)
-            self.__position = destination
-            print(f"{self.__name} arrives at position {self.__position} in the {self.__vehicle}.")
-            self.__vehicle = None
-        else:
-            print(f"{self.__name} is already using a vehicle.")
+    # def use_vehicle(self, vehicle, destination):
+    #     #Character boards a vehicle and drives to destination 
+    #     #abstraction is used to hide the complexity within the use_vehicle function
+    #     if vehicle:
+    #         self.__vehicle = vehicle
+    #         print(f"{self.__name} boards the {self.__vehicle}")
+    #         self.__vehicle.drive(destination)
+    #         self.__position = destination
+    #         print(f"{self.__name} arrives at position {self.__position} in the {self.__vehicle}.")
+    #         self.__vehicle = None
+    #     else:
+    #         print(f"{self.__name} is already using a vehicle.")
 
 # C1 = Character("Megamind", 100, (3, 0))
 # C2 = Character("Batman", 100, (5, 1))
@@ -75,42 +79,24 @@ V2.drive((6,9))
 V2.refuel()
 V2.stop()
 
-C3.use_vehicle("Bike",(10,1))
+#C3.use_vehicle("Bike",(10,1))
 
 #Special characters inheriting from the character class
 class UltimateHero(Character):
+    def __init__(self, name, health, position):
+        super().__init__(name, health, position)
+
+    def get_name(self):
+        return self.__name
+        
     def double_jump(self):
-        print(f"{self.__name} performs a double jump!")
+        print(f"{self.__name} performs a double jump.")
 
     def fast_run(self):
-        print(f"{self.__name} runs fast!")
+        print(f"{self.__name} runs fast. ")
 
+Hero1= UltimateHero("Black widow","Good health",(1,1))
+print(Hero1.get_name())
 
 # Simple game scenario
-# def game_scenario():
-#     # Create character and vehicle objects
-#     character = Character("Player1", 100, (0, 0))
-#     hero = HeroCharacter("Hero", 150, (10, 10))
-#     vehicle = Vehicle("Car", 60, 50)
-    
-#     # Character moves and interacts
-#     character.move((5, 5))
-#     character.attack()
-#     character.interact()
 
-#     # Character interacts with vehicle
-#     player_with_vehicle = CharacterWithVehicle("Player2", 100, (0, 0))
-#     player_with_vehicle.get_in(vehicle)
-#     vehicle.drive()
-#     player_with_vehicle.get_out()
-
-#     # Hero character uses specialized abilities
-#     hero.double_jump()
-#     hero.fast_run()
-
-#     # Handling different object types with polymorphism
-#     handle_object(character)
-#     handle_object(vehicle)
-
-# # Run the game scenario
-# game_scenario()
