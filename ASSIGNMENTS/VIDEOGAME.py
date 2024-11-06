@@ -1,4 +1,3 @@
-# Character class with encapsulation
 class Character:
     def __init__(self, name, health, position):
         self.__name = name
@@ -14,42 +13,29 @@ class Character:
 
     def attack(self,target):
         if self.__position==target.__position:
-            print(f"{self.__name} attacks {target}")
+            print(f"{self.__name} attacks {target.get_name()}")
         else:
-            print(f"{target} is too far.")
+            print(f"{target.get_name()} is too far.")
 
     def condition(self,new_healthStatus):
         self.__health=new_healthStatus
         print(f"{self.__name} is {self.__health}")
 
     #adding a method in the character class to extend its functionality
-    # def use_vehicle(self, vehicle, destination):
-    #     #Character boards a vehicle and drives to destination 
-    #     #abstraction is used to hide the complexity within the use_vehicle function
-    #     if vehicle:
-    #         self.__vehicle = vehicle
-    #         print(f"{self.__name} boards the {self.__vehicle}")
-    #         self.__vehicle.drive(destination)
-    #         self.__position = destination
-    #         print(f"{self.__name} arrives at position {self.__position} in the {self.__vehicle}.")
-    #         self.__vehicle = None
-    #     else:
-    #         print(f"{self.__name} is already using a vehicle.")
+    def use_vehicle(self, vehicle, destination):
+        #Character boards a vehicle and drives to destination 
+        #abstraction is used to hide the complexity within the use_vehicle function
+        if vehicle:
+            self.__vehicle = vehicle
+            print(f"{self.__name} boards the {self.__vehicle}")
+            self.__vehicle.drive(destination)
+            self.__position = destination
+            print(f"{self.__name} arrives at position {self.__position} in the {self.__vehicle}.")
+            self.__vehicle = None
+        else:
+            print(f"{self.__name} is already using a vehicle.")
 
-# C1 = Character("Megamind", 100, (3, 0))
-# C2 = Character("Batman", 100, (5, 1))
-# # Character moves and attacks
-# C1.move((5, 5))
-# #C1.attack()
-# C2.move((6,0))
-# C2.attack(C1)
-# C2.condition("Alive and well")
-# C1.move((6,0))
-# C2.attack(C1)
-# C1.condition("Injured")
-C3 = Character("Miles Morales", 200, (7,4))
 
-# Vehicle class with encapsulation
 class Vehicle:
     def __init__(self, type, speed, fuel_level):
         self.__type = type
@@ -70,33 +56,64 @@ class Vehicle:
     def stop(self):
         print(f"The {self.__type} stops.")
 
-V1= Vehicle("Car", 60, 50)
-V2= Vehicle("Bike", 120, 70)
-V1.drive((2,1))
-V1.refuel()
-V1.stop()
-V2.drive((6,9))
-V2.refuel()
-V2.stop()
+    def __str__(self):
+        return self.__type
 
-#C3.use_vehicle("Bike",(10,1))
+C1 = Character("Megamind", 100, (3, 0))
+C2 = Character("Batman", 100, (5, 1))
+C3 = Character("Miles Morales", 200, (7,4))
+
+V1= Vehicle("Bike",100, 20)
+V2= Vehicle("Bentley Mulsanne",240,90)
+
+C3.use_vehicle( V1,(10,1))
 
 #Special characters inheriting from the character class
 class UltimateHero(Character):
     def __init__(self, name, health, position):
         super().__init__(name, health, position)
-
-    def get_name(self):
-        return self.__name
         
     def double_jump(self):
-        print(f"{self.__name} performs a double jump.")
+        print(f"{self.get_name()} performs a double jump.")
 
     def fast_run(self):
-        print(f"{self.__name} runs fast. ")
+        print(f"{self.get_name()} runs fast. ")
 
 Hero1= UltimateHero("Black widow","Good health",(1,1))
+Hero2= UltimateHero("White Tiger","Good health",(1,5))
 print(Hero1.get_name())
+print(Hero2.get_name())
 
-# Simple game scenario
+Hero1.fast_run()
+Hero1.double_jump()
+Hero2.move((1,1))
+Hero2.attack(Hero1)
+Hero1.condition("Injured")
+Hero2.use_vehicle(V2,(10,9))
+
+C3.attack(Hero2)
+
+#A simple game scenario
+print("Our heroes are gearing to fight against a villain")
+print("Viggo Grimborn is wreaking havoc in the city of Badtown. Professor X and his apprentice are working together to defeat him.")
+Hero3=UltimateHero("Professor X","Disabled",(7,7))
+Hero4=Character("Mystique","Healthy",(5,5))
+Villain1=Character("Viggo Grimborn","Healthy",(11,2))
+
+V3=Vehicle("Batmobile",240,150)
+
+print("Professor X and Mystique locate Viggo and use the batmobile to reach him")
+Hero3.use_vehicle(V3,(11,0))
+Hero4.use_vehicle(V3,(11,0))
+
+Hero4.move((11,2))
+Hero3.move((11,2))
+print("Our heroes reach the villain and attack")
+Hero3.attack(Villain1)
+Hero4.attack(Villain1)
+
+Villain1.condition("Dead")
+print("The vilain is now dead. Our heroes are victorious")
+
+
 
