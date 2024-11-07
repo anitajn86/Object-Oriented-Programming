@@ -1,25 +1,25 @@
 class Character:
     def __init__(self, name, health, position):
-        self.__name = name
-        self.__health = health
-        self.__position = position
+        self._name = name
+        self._health = health
+        self._position = position
 
     def get_name(self):
-        return self.__name
+        return self._name
 
     def move(self, new_position):
-        self.__position = new_position
-        print(f"{self.__name} moves to position {self.__position}")
+        self._position = new_position
+        print(f"{self._name} moves to position {self._position}")
 
     def attack(self,target):
-        if self.__position==target.__position:
-            print(f"{self.__name} attacks {target.get_name()}")
+        if self._position==target._position:
+            print(f"{self._name} attacks {target.get_name()}")
         else:
             print(f"{target.get_name()} is too far.")
 
     def condition(self,new_healthStatus):
         self.__health=new_healthStatus
-        print(f"{self.__name} is {self.__health}")
+        print(f"{self._name} is {self.__health}")
 
     #adding a method in the character class to extend its functionality
     def use_vehicle(self, vehicle, destination):
@@ -27,13 +27,13 @@ class Character:
         #abstraction is used to hide the complexity within the use_vehicle function
         if vehicle:
             self.__vehicle = vehicle
-            print(f"{self.__name} boards the {self.__vehicle}")
+            print(f"{self._name} boards the {self.__vehicle}")
             self.__vehicle.drive(destination)
             self.__position = destination
-            print(f"{self.__name} arrives at position {self.__position} in the {self.__vehicle}.")
+            print(f"{self._name} arrives at position {self.__position} in the {self.__vehicle}.")
             self.__vehicle = None
         else:
-            print(f"{self.__name} is already using a vehicle.")
+            print(f"{self._name} is already using a vehicle.")
 
 
 class Vehicle:
@@ -70,8 +70,9 @@ C3.use_vehicle( V1,(10,1))
 
 #Special characters inheriting from the character class
 class UltimateHero(Character):
-    def __init__(self, name, health, position):
+    def __init__(self, name, health, position, wings=False):
         super().__init__(name, health, position)
+        self._wings=wings
         
     def double_jump(self):
         print(f"{self.get_name()} performs a double jump.")
@@ -79,8 +80,15 @@ class UltimateHero(Character):
     def fast_run(self):
         print(f"{self.get_name()} runs fast. ")
 
-Hero1= UltimateHero("Black widow","Good health",(1,1))
-Hero2= UltimateHero("White Tiger","Good health",(1,5))
+    def move(self, new_position): #polymorphism using method overriding.
+        if not self._wings:
+            self._position = new_position
+            print(f"{self._name} flies to position {self._position}")
+        else:
+            super().move(new_position) #this now calls the original move method.
+
+Hero1= UltimateHero("Black widow","Good health",(1,1),False)
+Hero2= UltimateHero("White Tiger","Good health",(1,5),True)
 print(Hero1.get_name())
 print(Hero2.get_name())
 
@@ -91,6 +99,8 @@ Hero2.attack(Hero1)
 Hero1.condition("Injured")
 Hero2.use_vehicle(V2,(10,9))
 
+Hero1.move((2,1))
+Hero2.move((6,7))
 C3.attack(Hero2)
 
 #A simple game scenario
