@@ -1,0 +1,200 @@
+from abc import ABC, abstractmethod
+
+class Participant:
+    def __init__(self,name,gender,age,location):
+        self._name=name
+        self._gender=gender
+        self._age=age
+        self._location=location
+
+    @property
+    def name(self):
+        return self._name
+    
+    @property
+    def gender(self):
+        return self._gender
+    
+    @abstractmethod   #abstraction
+    def age_validity(self,age):
+        pass
+
+    @abstractmethod
+    def location_validity(self,location):
+        pass
+
+class Voter(Participant): #inheritance
+    def __init__(self,name, gender, age, location, voter_id, has_voted=False):
+        super().__init__(name,gender,age,location)
+        self._voter_id=voter_id   #encapsulation
+        self._has_voted=has_voted  #encapsulation
+
+    def age_validity(self):  #abstraction
+        if self._age > 18:
+            print(f"{self._name} is {self._age} hence validated to vote.")
+            return True
+        else:
+            print(f"{self._name} is too young to vote")
+            return False
+
+    def location_validity(self):
+        allowed_location="Mukono" #this is the region in which we are voting
+        if self._location ==allowed_location:
+            print(f"{self._name} belongs to this region")
+            return True
+        else:
+            print(f"{self._name} does not belong to this region")
+            return False
+
+    def register_voter(self):
+        if self.age_validity() and self.location_validity():
+            print(f"{self._name} has been registered to vote")
+        else:
+            print(f"{self._name} is not elicited to vote")
+
+    def votingStatus(self):
+        if not self._has_voted:
+            print(f"{self._name} has already voted")
+        else:
+            print(f"{self._name} has not yet voted")
+
+    def __str__(self): #the string method provides formatted output instead of the memory location.
+        return(f"{self._name},{self._gender},{self._age},{self._location},{self._voter_id},{self._has_voted}")
+
+#creating instances of the class voter  
+V1=Voter("Anita","Female",22,"Mukono",79,True)
+V2=Voter("Tori Vega","Female",24,"Entebbe",34,False)
+V3=Voter("Liz","Female",15,"Mukono",99,True)
+V4=Voter("Noela","Female",29,"Mukono",12,True)
+V5=Voter("Joy","Female",32,"Kololo",67,True)
+V6=Voter("Calvin","Male",16,"Mukono",72,True)
+V7=Voter("Charles","Male",55,"Jinja",76,True)
+
+print(V1 ,
+      V2,
+      V3,
+      V4,
+      V5,
+      V6,
+      V7)
+V2.register_voter()
+V1.register_voter()
+V3.register_voter()
+V4.register_voter()
+V5.register_voter()
+V6.register_voter()
+V7.register_voter()
+
+V1.votingStatus()
+        
+class Candidate(Participant):  #inheritance
+    def __init__(self,name,gender,age,location,candidate_id,votes):
+        super().__init__(name,gender,age,location)
+        self._votes=votes
+        self._candidate_id=candidate_id
+
+    def age_validity(self): #polymorphism
+        if 25 > self._age > 70:
+            print(f"Candidate {self._name} is {self._age} hence validated to stand for a position")
+            return True
+        else:
+            print(f"{self._name} is out of the age bracket")
+            return False
+        
+    def location_validity(self):
+        allowed_location="Mukono" #this is the region in which we are voting
+        if self._location ==allowed_location:
+            print(f"{self._name} belongs to this region")
+            return True
+        else:
+            print(f"{self._name} does not belong to this region")
+            return False
+        
+    def register_candidate(self):
+        if self.age_validity() and self.location_validity():
+            print(f"{self._name} has been registered as a candidate.")
+        else:
+            print(f"{self._name} cannot be registered as a candidate.")
+
+    def get_votes(self):
+        return self._votes
+    
+    def set_votes(self,newVoteCount):
+        self._votes=newVoteCount
+
+    def __str__(self):
+        return(f"{self._name},{self._gender},{self._age},{self._location},{self._candidate_id},{self._votes}")
+
+#creating instances of the class candidate
+C1=Candidate("Christopher Robin","Male",20,"Mukono",67,5)
+C2=Candidate("Jamie Foxx","Male",352,"Mukono",69,6)
+print(C1)
+print(C2)
+
+class Vote:
+    def __init__(self,voter,candidate):
+        if not isinstance(voter,Voter):
+            raise ValueError("Voter must be an instance of the class Voter")
+        if not isinstance(candidate,Candidate):
+            raise ValueError("Candidate must be an instance of the class Candidate")
+        self._voter=voter
+        self._candidate=candidate
+
+    def cast_vote(self):
+        if not self._voter._has_voted and self._voter.age_validity() and self._voter.location_validity():
+            self._voter._has_voted=True
+            self._candidate.set_votes(self._candidate.get_votes()+1)
+            print(f"{self._voter._name} has successfully voted for {self._candidate._name}")
+        else:
+            print(f"{self._voter._name} is not eligible to vote or has already voted")
+    
+    def __str__(self):
+        return f"{self._voter._name} for {self._candidate._name}"
+    
+#creating instances of the class vote
+vote1=Vote(V1,C2)
+vote2=Vote(V1,C1)
+print(vote1)
+print(vote2)
+
+class Election:
+    def __init__(self):
+        self._voters = []  # list to store voters
+        self._candidates = []  # list to store candidates
+    
+    def add_voter(self, voter):
+        if isinstance(voter, Voter):  # Check if the provided object is of the Voter class
+            self._voters.append(voter)
+            print(f"{voter._name} has been added to the voter list.")
+        else:
+            print("Invalid voter. Must be an instance of the Voter class.")
+
+    def add_candidate(self, candidate):
+        if isinstance(candidate, Candidate):  # Check if the provided object is of the Candidate class
+            self._candidates.append(candidate)
+            print(f"{candidate._name} has been added to the candidate list.")
+        else:
+            print("Invalid candidate. Must be an instance of the Candidate class.")
+    
+    def get_voters(self):
+        return self._voters
+    
+    def get_candidates(self):
+        return self._candidates
+    
+    def __str__(self):
+        return f"Voters: {len(self._voters)} | Candidates: {len(self._candidates)}"
+
+#creating instances of the class election  
+election=Election()
+election.add_voter(V1)
+election.add_voter(V2)
+election.add_voter(V3)
+election.add_voter(V4)
+election.add_voter(V5)
+election.add_voter(V6)
+election.add_voter(V7)
+
+election.add_candidate(C1)
+election.add_candidate(C2)
+
