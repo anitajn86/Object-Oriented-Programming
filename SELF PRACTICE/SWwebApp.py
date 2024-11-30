@@ -80,17 +80,13 @@ class NormalUser(User): #inheritance
         else:
             super().viewPages()
             
-class GuestUser:
+class GuestUser(User):
     def __init__(self,email,username): #these are the guest user's google credentials
         self._email=email
         self._username=username
 
-    def viewPages
+    def viewPages(self):
+        super().viewPages()
+
         
 
-# class Operations:
-#     def __init__(self, guest,admin):
-#         if not isinstance(guest,GuestUser) and not isinstance(admin,AdminUser):
-#             raise ValueError("These are not instances of their respective classes")
-#         self._guest=guest
-#         self._admin=admin

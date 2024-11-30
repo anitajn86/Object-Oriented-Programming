@@ -54,7 +54,7 @@ class Voter(Participant): #inheritance
         else:
             print(f"{self._name} has not yet voted.")
 
-    def cast_vote(self):
+    def cast_vote(self):  #polymorphism
         if not self._has_voted:
             self._has_voted = True
             print(f"{self._name} has cast their vote.")
@@ -108,7 +108,7 @@ class Vote:
         self._voter = voter
         self._candidate = candidate
 
-    def cast_vote(self):
+    def cast_vote(self): #polymorphism
         if self._voter.cast_vote():
             self._candidate.receive_vote()
             print(f"Vote has been cast for {self._candidate.name} by {self._voter.name}.")
