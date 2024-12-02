@@ -37,3 +37,5 @@ s3 = Student("Bob", "Mathematics", "MATH002")
 
 management.addStudent(s1)
 # management.addStudent(s2)
+
+print("hello")
